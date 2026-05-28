@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huong Le — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&family=DM+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#080808;
+  --surface:#111111;
+  --surface2:#181818;
+  --text:#F0EDE8;
+  --muted:#6B6660;
+  --accent:#FF6700;
+  --accent2:#FF9140;
+  --border:#222222;
+  --white:#FFFFFF;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* Custom cursor */
+.cursor{
+  position:fixed;
+  width:10px;height:10px;
+  background:var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transition:transform 0.15s ease, opacity 0.3s;
+  transform:translate(-50%,-50%);
+}
+.cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border:1px solid var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.4s ease, width 0.3s, height 0.3s, opacity 0.3s;
+  opacity:0.5;
+}
+
+/* Noise overlay */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:1;
+  opacity:0.4;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  padding:1.5rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:100;
+  background:rgba(8,8,8,0.55);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  backdrop-filter:blur(8px);
+  transition:border-color 0.3s, background 0.3s;
+}
+nav.scrolled{
+  border-bottom-color:var(--border);
+  background:rgba(8,8,8,0.94);
+  backdrop-filter:blur(16px);
+}
+.nav-logo{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  color:rgba(240,237,232,0.45);
+  letter-spacing:0.1em;
+}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:rgba(240,237,232,0.52);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--text);}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 3rem clamp(5rem,14vh,12rem);
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg-text{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(120px,22vw,320px);
+  color:transparent;
+  -webkit-text-stroke:1.5px rgba(255,255,255,0.11);
+  letter-spacing:-0.02em;
+  white-space:nowrap;
+  user-select:none;
+  pointer-events:none;
+  animation:bgTextFloat 8s ease-in-out infinite;
+}
+@keyframes bgTextFloat{
+  0%,100%{transform:translate(-50%,-50%) translateY(0);}
+  50%{transform:translate(-50%,-50%) translateY(-20px);}
+}
+.hero-tag{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-bottom:1.5rem;
+  opacity:0;
+  animation:fadeUp 0.8s ease 0.3s forwards;
+}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(90px,14vw,220px);
+  line-height:0.88;
+  letter-spacing:-0.01em;
+  opacity:0;
+  animation:fadeUp 1s ease 0.5s forwards;
+}
+.hero-title .line2{
+  -webkit-text-stroke:1px var(--text);
+  color:transparent;
+  display:block;
+}
+.hero-sub{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-top:3rem;
+  opacity:0;
+  animation:fadeUp 0.8s ease 0.9s forwards;
+}
+.hero-desc{
+  max-width:380px;
+  font-size:15px;
+  line-height:1.7;
+  color:var(--muted);
+}
+.hero-desc strong{color:var(--text);font-weight:400;}
+.hero-scroll{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.15em;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.scroll-line{
+  width:1px;height:60px;
+  background:linear-gradient(var(--accent),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:0.4;transform:scaleY(1);}
+  50%{opacity:1;transform:scaleY(0.7);}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* DIVIDER */
+.divider{
+  height:1px;
+  background:var(--border);
+  margin:0 3rem;
+}
+
+/* ABOUT */
+.about{padding:6rem 3rem;}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:3rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-label::after{
+  content:'';flex:1;
+  height:1px;background:var(--border);
+}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:start;
+}
+.about-heading{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,6vw,80px);
+  line-height:1;
+  letter-spacing:0.02em;
+}
+.about-heading .accent{color:var(--accent);}
+.about-right{display:flex;flex-direction:column;gap:2.5rem;}
+.about-block h4{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:0.75rem;
+}
+.about-block p{
+  font-size:15px;
+  line-height:1.8;
+  color:var(--text);
+  opacity:0.8;
+}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem;}
+.tag{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  padding:6px 14px;
+  border:1px solid var(--border);
+  color:var(--muted);
+  letter-spacing:0.1em;
+  transition:border-color 0.2s,color 0.2s;
+}
+.tag:hover{border-color:var(--accent);color:var(--accent);}
+
+/* WORK */
+.work{padding:4rem 3rem 6rem;}
+.work-heading{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,6vw,80px);
+  margin-bottom:3rem;
+}
+.projects{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.project-item{
+  background:var(--bg);
+  display:grid;
+  grid-template-columns:60px 1fr auto;
+  align-items:center;
+  gap:2rem;
+  padding:2rem 2rem;
+  cursor:none;
+  transition:background 0.3s;
+  position:relative;
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+}
+.project-item::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:0;
+  background:var(--accent);
+  transition:width 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.project-item:hover::before{width:3px;}
+.project-item:hover{background:var(--surface);}
+.project-num{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--muted);
+}
+.project-info h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(28px,3.5vw,48px);
+  letter-spacing:0.02em;
+  transition:color 0.2s;
+}
+.project-item:hover .project-info h3{color:var(--accent);}
+.project-info p{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+  font-family:'DM Mono',monospace;
+  letter-spacing:0.05em;
+}
+.project-tags{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+}
+.project-tag{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  padding:4px 10px;
+  border:1px solid var(--border);
+  color:var(--muted);
+  white-space:nowrap;
+}
+.project-arrow{
+  font-size:20px;
+  color:var(--muted);
+  transition:transform 0.3s,color 0.2s;
+  margin-left:1rem;
+}
+.project-item:hover .project-arrow{
+  transform:translate(4px,-4px);
+  color:var(--accent);
+}
+
+/* SKILLS */
+.skills{padding:4rem 3rem 6rem;}
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+  margin-top:0;
+}
+.skill-card{
+  background:var(--bg);
+  padding:2.5rem 2rem;
+  transition:background 0.3s;
+}
+.skill-card:hover{background:var(--surface);}
+.skill-card h4{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;
+  letter-spacing:0.05em;
+  margin-bottom:1rem;
+}
+.skill-card ul{
+  list-style:none;
+  display:flex;flex-direction:column;gap:6px;
+}
+.skill-card li{
+  font-size:13px;
+  color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.skill-card li::before{
+  content:'—';
+  color:var(--accent);
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+}
+
+/* VALUES */
+.values{padding:4rem 3rem 6rem;}
+.values-inner{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:2rem;
+  margin-top:2rem;
+}
+.value-item{
+  padding:2rem 0;
+  border-top:1px solid var(--border);
+}
+.value-num{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--accent);
+  margin-bottom:1rem;
+}
+.value-item h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;
+  margin-bottom:0.75rem;
+}
+.value-item p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* FOOTER */
+footer{
+  padding:4rem 3rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-left{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(36px,5vw,64px);
+  line-height:1;
+}
+.footer-left span{
+  display:block;
+  color:var(--accent);
+}
+.footer-links{
+  display:flex;flex-direction:column;gap:1rem;
+  text-align:right;
+}
+.footer-links a{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.1em;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--accent);}
+.footer-copy{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+  padding:1.5rem 3rem;
+  border-top:1px solid var(--border);
+  letter-spacing:0.1em;
+}
+
+/* Image preview on hover */
+.img-preview{
+  position:fixed;
+  width:340px;
+  height:220px;
+  pointer-events:none;
+  z-index:200;
+  opacity:0;
+  transform:scale(0.92) translateY(10px);
+  transition:opacity 0.35s ease, transform 0.35s ease;
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.8);
+}
+.img-preview.active{
+  opacity:1;
+  transform:scale(1) translateY(0);
+}
+.img-preview img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.img-preview-label{display:none;}
+
+/* Reveal animation */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* Marquee */
+.marquee-wrap{
+  overflow:hidden;
+  padding:1.5rem 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.marquee{
+  display:flex;gap:0;
+  animation:marquee 20s linear infinite;
+  white-space:nowrap;
+}
+.marquee-item{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:14px;
+  letter-spacing:0.2em;
+  color:var(--muted);
+  padding:0 3rem;
+  display:flex;align-items:center;gap:3rem;
+}
+.marquee-item span{color:var(--accent);}
+@keyframes marquee{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{gap:1rem;}
+  .hero{padding:0 1.5rem 3rem;}
+  .about,.work,.skills,.values{padding-left:1.5rem;padding-right:1.5rem;}
+  .about-grid,.skills-grid,.values-inner{grid-template-columns:1fr;}
+  .project-item{grid-template-columns:40px 1fr;gap:1rem;}
+  .project-tags{display:none;}
+  footer{flex-direction:column;gap:2rem;text-align:center;padding:3rem 1.5rem;}
+  .footer-links{text-align:center;}
+  .footer-copy{padding:1.5rem;}
+}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.75);
+  z-index:600;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.4s ease,visibility 0.4s;
+  backdrop-filter:blur(20px);
+  padding:2rem;
+}
+.modal-overlay.open{opacity:1;visibility:visible;}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal::-webkit-scrollbar{display:none;}
+.modal{
+  background:var(--surface);
+  width:100%;max-width:880px;
+  max-height:90vh;
+  overflow-y:auto;
+  position:relative;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+  transform:translateY(50px) scale(0.95);
+  transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  scrollbar-width:none;
+}
+.modal-close{
+  position:fixed;top:1.8rem;right:1.8rem;
+  width:44px;height:44px;
+  background:var(--accent);border:none;
+  color:#fff;font-size:18px;
+  cursor:none;z-index:700;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  transition:background 0.2s,transform 0.3s;
+  font-family:'DM Mono',monospace;
+  letter-spacing:0;
+}
+.modal-close:hover{background:var(--accent2);transform:rotate(90deg);}
+.modal-hero{
+  width:100%;height:auto;
+  display:block;
+  border-bottom:1px solid var(--border);
+  border-radius:16px 16px 0 0;
+}
+.modal-gallery{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  margin-top:2.5rem;
+  padding-top:2rem;
+  border-top:1px solid var(--border);
+}
+.modal-gallery:empty{display:none;}
+.modal-gallery-item{display:flex;flex-direction:column;gap:0;}
+.modal-gallery-item img{
+  width:100%;height:auto;
+  display:block;
+  border:1px solid var(--border);
+  cursor:zoom-in;
+  transition:transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.35s;
+}
+.modal-gallery-item{
+  position:relative;
+  overflow:hidden;
+  border-radius:4px;
+}
+.modal-gallery-item::after{
+  content:'↗ View Full';
+  position:absolute;
+  inset:0;
+  background:rgba(8,8,8,0.55);
+  backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--text);
+  opacity:0;
+  transition:opacity 0.3s;
+  pointer-events:none;
+}
+.modal-gallery-item:hover img{transform:scale(1.04);}
+.modal-gallery-item:hover::after{opacity:1;}
+
+/* LIGHTBOX */
+.lightbox{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:900;
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.3s ease,visibility 0.3s;
+  backdrop-filter:blur(16px);
+  cursor:zoom-out;
+}
+.lightbox.open{opacity:1;visibility:visible;}
+.lightbox img{
+  max-width:100%;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:8px;
+  box-shadow:0 40px 100px rgba(0,0,0,0.8);
+  transform:scale(0.92);
+  transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.lightbox.open img{transform:scale(1);}
+.lightbox-close{
+  position:absolute;top:1.5rem;right:1.5rem;
+  width:40px;height:40px;
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:50%;
+  color:var(--text);
+  font-size:16px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s,transform 0.2s;
+}
+.modal-gallery-label{
+  padding:10px 0 4px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.modal-gallery-sublabel{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.1em;
+  color:var(--muted);
+}
+@media(max-width:768px){
+  .modal-gallery{grid-template-columns:1fr;}
+}
+.modal-body{padding:2.5rem;}
+.modal-eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:0.75rem;
+}
+.modal-heading{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(40px,5vw,68px);
+  line-height:1;margin-bottom:2rem;
+}
+.modal-meta-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;padding:1.5rem 0;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  margin-bottom:2rem;
+  align-items:start;
+}
+.modal-meta-item h5{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.4rem;
+}
+.modal-meta-item p{font-size:14px;color:var(--text);}
+.modal-meta-item:nth-child(2){text-align:center;}
+.modal-meta-item:nth-child(3){text-align:right;}
+.modal-desc{
+  font-size:15px;line-height:1.85;
+  color:var(--muted);margin-bottom:2rem;
+}
+.modal-tools-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;}
+.modal-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);
+  text-decoration:none;padding:12px 24px;
+  transition:background 0.2s;
+}
+.modal-cta:hover{background:var(--accent2);}
+@media(max-width:768px){
+  .modal-overlay{padding:0;}
+  .modal{max-height:100vh;border-radius:0;}
+  .modal-body{padding:1.5rem;}
+  .modal-close{top:1rem;right:1rem;width:38px;height:38px;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-logo"><span>Le Huong</span> · Portfolio 2026</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#skills">Skills</a>
+    <a href="https://may1236.github.io/unidbite/" target="_blank">Live Project ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">LE HUONG</div>
+  <div class="hero-tag">Designer · Builder · System Thinker</div>
+  <h1 class="hero-title">
+    I Design<br>
+    <span class="line2">With Soul.</span>
+  </h1>
+  <div class="hero-sub">
+    <p class="hero-desc">
+      <strong>Huong Le</strong> - Design student at SAIT Calgary.
+      I don't separate creativity from systems thinking.
+      The best design is one that <strong>works</strong> as beautifully as it looks.
+    </p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      scroll
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <div class="marquee-item">UX / UI Design <span>✦</span> Visual Design <span>✦</span> Branding <span>✦</span> Product Mockup <span>✦</span> Web Development <span>✦</span> System Thinking <span>✦</span> Print Design <span>✦</span> Typography <span>✦</span></div>
+    <div class="marquee-item">UX / UI Design <span>✦</span> Visual Design <span>✦</span> Branding <span>✦</span> Product Mockup <span>✦</span> Web Development <span>✦</span> System Thinking <span>✦</span> Print Design <span>✦</span> Typography <span>✦</span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">01 — About Me</div>
+  <div class="about-grid reveal">
+    <div>
+      <h2 class="about-heading">
+        Who<br>I<br><span class="accent">Am.</span>
+      </h2>
+      <div class="tags" style="margin-top:3rem;">
+        <div class="tag">SOULFUL</div>
+        <div class="tag">OPTIMISTIC</div>
+        <div class="tag">UNSTOPPABLE</div>
+        <div class="tag">LIMITLESS</div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-block">
+        <h4>Introduction</h4>
+        <p>I'm a designer who thinks in systems — equally at home crafting a cinematic movie poster, engineering a web app from scratch, or mapping out a business workflow. My work sits at the intersection of aesthetics and logic.</p>
+      </div>
+      <div class="about-block">
+        <h4>What I Love</h4>
+        <p>Dark aesthetics. Dramatic compositions. The quiet logic inside a well-structured system. Typography with personality. The tension between emotion and function — when both exist in one piece of work.</p>
+      </div>
+      <div class="about-block">
+        <h4>What Inspires Me</h4>
+        <p>Designers who break conventions but stay coherent. Builders who ship real things. The power of negative space. Horror-inspired visuals that make you feel something before you understand it.</p>
+      </div>
+      <div class="about-block">
+        <h4>What I Value</h4>
+        <p>Authenticity over perfection. Doing things differently, but with intention. Building things that solve real problems for real people — not just look good in a portfolio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="section-label">02 — Selected Work</div>
+  <h2 class="work-heading reveal">Projects.</h2>
+  <div class="projects reveal">
+
+    <a class="project-item" href="https://may1236.github.io/unidbite/" target="_blank" data-img="images/unidbite.png" data-label="Web App · Live"
+       data-type="Web Build · Product Flow" data-year="2026"
+       data-approach="Academic Team Project"
+       data-desc="A food discovery web app built for students around SAIT Calgary. Uses real-time geolocation to surface the best nearby student deals. Designed and built solo — from wireframes to live deployment."
+       data-tools="JavaScript,Geolocation API,HTML/CSS"
+       data-link="https://may1236.github.io/unidbite/">
+      <div class="project-num">001</div>
+      <div class="project-info">
+        <h3>UnidBite</h3>
+        <p>Web Build · Product Flow · Information Architecture · 2026</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">JavaScript, HTML/CSS</span>
+          <span class="project-tag">Geolocation API</span>
+          <span class="project-tag">Academic Team Project with May Tran</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </a>
+
+    <div class="project-item" data-img="images/soul (1).png"
+       data-label="Identity Design · Solo Project · 2025"
+       data-type="Logo Design · Brand Identity · Typography" data-year="2025"
+       data-approach="Solo Project"
+       data-desc="A personal identity system built around the name SOUL — a self-directed branding exercise exploring what a logo means when it has to carry real meaning. 'Always choosing a different path from the crowd, but still staying within my own framework.' Dark, restrained, and deliberately unconventional."
+       data-tools="Adobe Illustrator,Identity,Branding,Typography"
+       data-imgs="images/soul (2).png,images/soul (3).png"
+       data-img-labels="Design Process,Color Variations"
+       data-img-sublabels="Sketches,Brand System Thinking">
+      <div class="project-num">002</div>
+      <div class="project-info">
+        <h3>SOUL — Personal Identity System</h3>
+        <p>Logo Design · Brand Identity · Typography · 2025</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">Illustrator</span>
+          <span class="project-tag">Identity</span>
+          <span class="project-tag">Branding</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="project-item" data-img="images/main-the-noir.png"
+       data-label="Brand Identity · Academic Team Project with May Tran & Khoa Le"
+       data-type="Branding · Typography · Mockup" data-year="2026"
+       data-approach="Academic Team Project"
+       data-desc="A full brand identity system for The Noir — a conceptual luxury retail brand developed as an academic team project. Encompasses a complete typography system and hierarchy, and photorealistic store mockups bringing the brand into physical retail environments."
+       data-tools="Branding,Typography,Mockup"
+       data-imgs="images/mockup-the-noir (1).png,images/mockup-the-noir (2).png,images/mockup-the-noir (3).png,images/mockup-the-noir (4).png,images/typography-system-page (1).png,images/typography-system-page (2).png,images/typography-system-page (3).png,images/typography-system-page (4).png"
+       data-img-labels="Outdoor Signage,Urban Environment,Building Facade,Storefront Exterior,Typography Overview,Type Hierarchy,Type Application,Type Specimen"
+       data-img-sublabels="Brand in Environment,Spatial Identity,Exterior Branding,Retail Environment,Type System,Type System,Type System,Type System">
+      <div class="project-num">003</div>
+      <div class="project-info">
+        <h3>The Noir — Brand Identity & Campaign</h3>
+        <p>Brand Identity · Typography System · Store Mockups · 2026</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">Branding</span>
+          <span class="project-tag">Typography</span>
+          <span class="project-tag">Mockup</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="project-item" data-img="images/boba-main.png"
+       data-label="Solo Project · Brand System"
+       data-type="Branding · Logo Design · Campaign" data-year="2025"
+       data-approach="Solo Project"
+       data-desc="End-to-end brand project for BOBA Tea — from logo system and brand guideline to a full print and digital campaign. Deliverables include storefront signage, thank-you cards, Instagram ads, and DOOH digital banners.">
+      <div class="project-num">004</div>
+      <div class="project-info">
+        <h3>BOBA Tea — Brand Identity & Campaign</h3>
+        <p>Logo Design · Brand Guideline · Print & Digital Campaign · 2025</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">Branding</span>
+          <span class="project-tag">Logo Design</span>
+          <span class="project-tag">Campaign</span>
+          <span class="project-tag">Print & Digital</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="project-item" data-img="images/bundaberg.png" data-label="Commercial Design · 2026"
+       data-type="Commercial Design · Ad Creative" data-year="2026"
+       data-desc="Commercial-grade advertising campaign for Bundaberg Ginger Beer — two ad formats designed to match real-world campaign standards. Google Ads format for digital display and an Instagram Ads creative for social media. Photorealistic compositing with brand-accurate colour and styling throughout."
+       data-tools="Adobe Photoshop,Commercial,Photorealism,Ad Creative"
+       data-imgs="images/bundaberg.png,images/bundaberg-instagram-ads.png"
+       data-img-labels="Google Ads,Instagram Ads">
+      <div class="project-num">005</div>
+      <div class="project-info">
+        <h3>Bundaberg — Ad Campaign</h3>
+        <p>Commercial Design · Google Ads · Instagram Ads · 2026</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">Photoshop</span>
+          <span class="project-tag">Commercial</span>
+          <span class="project-tag">Photorealism</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="project-item" data-img="images/freak-show.jpg" data-label="Art Direction · 2024"
+       data-type="Art Direction · Visual Storytelling" data-year="2024"
+       data-desc="An art direction project channeling dark carnival energy. Collage-based visual storytelling mixing photography, halftone illustration, and graphic elements into a cohesive, unsettling mood — where spectacle meets unease."
+       data-tools="Adobe Photoshop,Collage,Art Direction,Visual Narrative">
+      <div class="project-num">006</div>
+      <div class="project-info">
+        <h3>Freak Show — Moodboard</h3>
+        <p>Art Direction · Visual Storytelling · Collage · 2024</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">Photoshop</span>
+          <span class="project-tag">Collage</span>
+          <span class="project-tag">Art Direction</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+
+    <div class="project-item" data-img="images/it-poster.png" data-label="Print Design · 2024"
+       data-type="Print Design · Illustration" data-year="2024"
+       data-desc="A cinematic print poster reimagining Stephen King's IT through negative space. Pennywise's face is embedded in a geometric triangle of light, with a solitary child standing below — capturing dread before you fully understand what you're seeing."
+       data-tools="Adobe Illustrator,Print,Negative Space,Dark Minimal">
+      <div class="project-num">007</div>
+      <div class="project-info">
+        <h3>IT Movie Poster</h3>
+        <p>Print Design · Illustration · Negative Space · 2024</p>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <div class="project-tags">
+          <span class="project-tag">Illustrator</span>
+          <span class="project-tag">Print</span>
+          <span class="project-tag">Dark Minimal</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-label">03 — What I Bring</div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <h4>Design</h4>
+      <ul>
+        <li>UX / UI Design</li>
+        <li>Visual &amp; Print Design</li>
+        <li>Branding &amp; Identity</li>
+        <li>Product Mockup</li>
+        <li>Typography &amp; Layout</li>
+        <li>Art Direction</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4>Build</h4>
+      <ul>
+        <li>HTML / CSS / JavaScript</li>
+        <li>React &amp; Frontend Dev</li>
+        <li>GitHub &amp; Version Control</li>
+        <li>Geolocation &amp; APIs</li>
+        <li>Automation &amp; AI Workflow</li>
+        <li>E-commerce Systems</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4>Tools</h4>
+      <ul>
+        <li>Figma</li>
+        <li>Adobe Illustrator</li>
+        <li>Adobe Photoshop</li>
+        <li>VS Code</li>
+        <li>Notion / Systems</li>
+        <li>Amazon &amp; Marketplaces</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="section-label">04 — Core Values</div>
+  <div class="values-inner reveal">
+    <div class="value-item">
+      <div class="value-num">01</div>
+      <h3>Authenticity</h3>
+      <p>Always choosing a different path from the crowd, but staying within my own framework — like my SOUL logo design.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-num">02</div>
+      <h3>Adaptability</h3>
+      <p>I design with my own aesthetic, but I can execute any visual direction my client needs. Preference ≠ limitation.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-num">03</div>
+      <h3>Systems Thinking</h3>
+      <p>Great design isn't decoration — it's a system that guides, solves, and communicates. Every piece has a logic behind it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    Let's Work<br>
+    <span>Together.</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://may1236.github.io/unidbite/" target="_blank">UnidBite Live Project ↗</a>
+    <a href="mailto:lesonghuong795@gmail.com">Email Me ↗</a>
+  </div>
+</footer>
+<div class="footer-copy">© 2026 Le Huong — Designed with soul, built with logic.</div>
+
+<!-- Image preview floating element -->
+<div class="img-preview" id="imgPreview">
+  <img src="" alt="" id="imgPreviewSrc">
+  <div class="img-preview-label" id="imgPreviewLabel"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&#x2715;</button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <button class="modal-close" id="modalClose">&#x2715;</button>
+  <div class="modal" id="modal">
+    <img class="modal-hero" id="modalHeroImg" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-eyebrow" id="modalEyebrow"></div>
+      <h2 class="modal-heading" id="modalHeading"></h2>
+      <div class="modal-meta-grid" id="modalMetaGrid"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-tools-wrap" id="modalToolsWrap"></div>
+      <a class="modal-cta" id="modalCta" href="#" target="_blank">View Live ↗</a>
+      <div class="modal-gallery" id="modalGallery"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+
+  // Move image preview with cursor offset
+  const preview = document.getElementById('imgPreview');
+  let px = mx + 30;
+  let py = my - 110;
+  if (px + 340 > window.innerWidth) px = mx - 370;
+  if (py < 10) py = my + 20;
+  preview.style.left = px + 'px';
+  preview.style.top = py + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// Cursor scale on hover
+document.querySelectorAll('a, .project-item, .tag, .skill-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    ring.style.width = '60px';
+    ring.style.height = '60px';
+    ring.style.opacity = '0.2';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+    ring.style.opacity = '0.5';
+  });
+});
+
+// Image preview on project hover
+const preview = document.getElementById('imgPreview');
+const previewImg = document.getElementById('imgPreviewSrc');
+const previewLabel = document.getElementById('imgPreviewLabel');
+
+document.querySelectorAll('.project-item[data-img]').forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    const imgSrc = item.getAttribute('data-img');
+    const label = item.getAttribute('data-label') || '';
+    previewImg.src = imgSrc;
+    previewLabel.textContent = label;
+    preview.classList.add('active');
+  });
+  item.addEventListener('mouseleave', () => {
+    preview.classList.remove('active');
+  });
+});
+
+// Sticky nav
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// PROJECT MODAL
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+const modalHeroImg = document.getElementById('modalHeroImg');
+const modalEyebrow = document.getElementById('modalEyebrow');
+const modalHeading = document.getElementById('modalHeading');
+const modalMetaGrid = document.getElementById('modalMetaGrid');
+const modalDescEl = document.getElementById('modalDesc');
+const modalToolsWrap = document.getElementById('modalToolsWrap');
+const modalCta = document.getElementById('modalCta');
+const modalGallery = document.getElementById('modalGallery');
+let modalOpen = false;
+
+function openModal(item) {
+  const img = item.getAttribute('data-img') || '';
+  const title = item.querySelector('h3').textContent;
+  const type = item.getAttribute('data-type') || item.querySelector('p').textContent;
+  const year = item.getAttribute('data-year') || '';
+  const desc = item.getAttribute('data-desc') || '';
+  const tools = (item.getAttribute('data-tools') || '').split(',').map(t => t.trim()).filter(Boolean);
+  const link = item.getAttribute('data-link') || '';
+  const imgs = (item.getAttribute('data-imgs') || '').split(',').map(s => s.trim()).filter(Boolean);
+  const imgLabels = (item.getAttribute('data-img-labels') || '').split(',').map(s => s.trim());
+  const imgSubLabels = (item.getAttribute('data-img-sublabels') || '').split(',').map(s => s.trim());
+  const approach = item.getAttribute('data-approach') || 'Solo Project';
+
+  modalHeroImg.src = img;
+  modalHeroImg.alt = title;
+  modalEyebrow.textContent = type;
+  modalHeading.textContent = title;
+
+  modalMetaGrid.innerHTML = `
+    <div class="modal-meta-item"><h5>Type</h5><p>${type}</p></div>
+    <div class="modal-meta-item"><h5>Year</h5><p>${year}</p></div>
+    <div class="modal-meta-item"><h5>Approach</h5><p>${approach}</p></div>
+  `;
+
+  modalDescEl.textContent = desc;
+
+  modalToolsWrap.innerHTML = '';
+  tools.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'project-tag';
+    span.textContent = t;
+    modalToolsWrap.appendChild(span);
+  });
+
+  if (link) {
+    modalCta.href = link;
+    modalCta.style.display = 'inline-flex';
+  } else {
+    modalCta.style.display = 'none';
+  }
+
+  // Gallery — show all imgs with labels below each
+  modalGallery.innerHTML = '';
+  if (imgs.length > 1) {
+    imgs.forEach((src, i) => {
+      const item = document.createElement('div');
+      item.className = 'modal-gallery-item';
+      item.innerHTML = `
+        <img src="${src}" alt="${imgLabels[i] || title}">
+        <div class="modal-gallery-label">${imgLabels[i] || ''}</div>
+        <div class="modal-gallery-sublabel">${imgSubLabels[i] || (i === 0 ? 'Digital Display' : 'Social Media')}</div>
+      `;
+      item.querySelector('img').addEventListener('click', () => openLightbox(src, imgLabels[i] || title));
+      modalGallery.appendChild(item);
+    });
+  }
+
+  modal.scrollTop = 0;
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modalOpen = true;
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  modalOpen = false;
+}
+
+// LIGHTBOX
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(src, alt) {
+  lightboxImg.src = src;
+  lightboxImg.alt = alt;
+  lightbox.classList.add('open');
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+}
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+document.querySelectorAll('.project-item').forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    openModal(item);
+  });
+});
+
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e => {
+  if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modalOpen) closeModal();
+});
+
+// Hide image preview when modal is open
+const origPreviewEnter = preview;
+document.querySelectorAll('.project-item[data-img]').forEach(item => {
+  item.addEventListener('mouseenter', () => { if (modalOpen) preview.classList.remove('active'); });
+});
+</script>
+</body>
+</html>
