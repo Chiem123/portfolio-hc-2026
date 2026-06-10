@@ -235,6 +235,26 @@ nav.scrolled{
   color:var(--text);
   opacity:0.8;
 }
+.about-block p+p{margin-top:1rem;}
+.about-block ul{
+  list-style:none;
+  display:flex;flex-direction:column;gap:10px;
+}
+.about-block ul li{
+  font-size:14px;
+  line-height:1.7;
+  color:var(--text);
+  opacity:0.8;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.about-block ul li::before{
+  content:'—';
+  color:var(--accent);
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  margin-top:3px;
+  flex-shrink:0;
+}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem;}
 .tag{
   font-family:'DM Mono',monospace;
@@ -763,19 +783,23 @@ footer{
     <div class="about-right">
       <div class="about-block">
         <h4>Introduction</h4>
-        <p>I'm a designer who thinks in systems — equally at home crafting a cinematic movie poster, engineering a web app from scratch, or mapping out a business workflow. My work sits at the intersection of aesthetics and logic.</p>
+        <p>I'm a designer who enjoys solving problems through structure, clarity, and thoughtful experiences. My work combines UX thinking, visual design, and digital execution to create solutions that are both functional and engaging.</p>
+        <p>Whether I'm designing an interface, building a website, creating a visual identity, or designing a poster or campaign, I focus on understanding the purpose behind every design decision. I believe design should not only look good — it should communicate something meaningful, guide people toward an intended experience, and create a connection between the message and the audience.</p>
+        <p>I'm especially interested in the space where aesthetics, usability, and systems thinking come together to create work that is both visually compelling and genuinely useful.</p>
       </div>
       <div class="about-block">
         <h4>What I Love</h4>
-        <p>Dark aesthetics. Dramatic compositions. The quiet logic inside a well-structured system. Typography with personality. The tension between emotion and function — when both exist in one piece of work.</p>
+        <p>I enjoy creating designs that bring structure and clarity to complex ideas. Whether it is a website, visual identity, or poster, I am drawn to the process of turning information into experiences that people can easily understand and connect with.</p>
+        <p>For me, good design is not just about aesthetics — it is about creating meaning and helping people navigate information naturally.</p>
       </div>
       <div class="about-block">
         <h4>What Inspires Me</h4>
-        <p>Designers who break conventions but stay coherent. Builders who ship real things. The power of negative space. Horror-inspired visuals that make you feel something before you understand it.</p>
+        <p>I am inspired by designers who balance creativity with purpose and create work that is both thoughtful and functional. What interests me most are projects that solve real problems, communicate clearly, and evolve from simple ideas into meaningful experiences.</p>
       </div>
       <div class="about-block">
         <h4>What I Value</h4>
-        <p>Authenticity over perfection. Doing things differently, but with intention. Building things that solve real problems for real people — not just look good in a portfolio.</p>
+        <p>I value clarity, adaptability, and intentional thinking. Every project is different, and I believe strong design comes from understanding the context, the audience, and the purpose before making visual decisions.</p>
+        <p>Whether the goal is to inform, persuade, guide, or create an emotional connection, I believe every design choice should contribute to that objective rather than exist purely for decoration.</p>
       </div>
     </div>
   </div>
@@ -862,11 +886,11 @@ footer{
        data-label="Solo Project · Brand Identity · 2025"
        data-type="Branding · Logo Design · Print & Digital Campaign" data-year="2025"
        data-approach="Solo Project"
-       data-desc="End-to-end brand identity built for BOBA — a warm, modern bubble tea brand targeting young coffee culture regulars. The project started with a structured Creative Brief defining the core problem. From there, a complete brand system was built: a 3D-effect logo suite, a three-tone color palette (Molten Amber, Roasted Bean, Vanilla Foam), and full brand guidelines. Deliverables span print and digital — from Instagram campaign mockups to physical storefront signage and thank-you cards."
+       data-desc="End-to-end brand identity built for BOBA — a warm, modern bubble tea brand targeting young coffee culture regulars. The project started with a structured Creative Brief defining the core problem. From there, a complete brand system was built: a 3D-effect logo suite, a three-tone color palette (Molten Amber, Roasted Bean, Vanilla Foam), and full brand guidelines. Deliverables span print and digital — from outdoor advertising mockups to physical thank-you cards."
        data-tools="Adobe Illustrator,Adobe Photoshop,Branding,Logo Design,Print Design,Digital Campaign"
-       data-imgs="images/Boba Tea - Creative Brief 2.png,images/Boba Tea - Creative Brief.png,images/Boba Tea - Brand Guideline cover.png,images/Boba Tea - Logo Variations page.png,images/Boba Tea - Color palette page.png,images/Boba Tea -Mockup Digital File.png,images/Boba Tea - mockup page.png"
+       data-imgs="images/Boba Tea - Creative Brief 2.png,images/Boba Tea - Creative Brief.png,images/Boba Tea - Brand Guideline cover.png,images/Boba Tea - Logo Variations page.png,images/Boba Tea - Color palette page.png,images/Boba Tea -Mockup Digital File.png,images/Boba Tea - thumbnail.jpg"
        data-img-labels="Creative Brief,Creative Brief — Detail,Brand Guideline,Logo System,Color Palette,Digital Campaign,Print Deliverables"
-       data-img-sublabels="Problem Definition,Research & Strategy,Brand System,Primary · B&W · Horizontal · Favicon,Molten Amber · Roasted Bean · Vanilla Foam,Instagram Mockup,Storefront Sign · Thank You Card"
+       data-img-sublabels="Problem Definition,Research & Strategy,Brand System,Primary · B&W · Horizontal · Favicon,Molten Amber · Roasted Bean · Vanilla Foam,Outdoor Advertising Mockup,Thank You Card"
        data-sections="01 — Creative Brief,02 — Brand Guideline,03 — Mockup"
        data-section-at="0,2,5">
       <div class="project-num">004</div>
