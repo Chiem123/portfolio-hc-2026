@@ -435,6 +435,28 @@ footer{
   transition:color 0.2s;
 }
 .footer-links a:hover{color:var(--accent);}
+.toast{
+  position:fixed;
+  bottom:5rem;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.05em;
+  padding:14px 28px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s ease, transform 0.3s ease;
+  z-index:10000;
+}
+.toast span{color:var(--accent);}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
 .footer-copy{
   font-family:'DM Mono',monospace;
   font-size:11px;
@@ -1050,6 +1072,9 @@ footer{
 </footer>
 <div class="footer-copy">© 2026 Le Huong — Designed with soul, built with logic.</div>
 
+<!-- Toast notification -->
+<div class="toast" id="toast">Email Copied: <span>lesonghuong795@gmail.com</span></div>
+
 <!-- Image preview floating element -->
 <div class="img-preview" id="imgPreview">
   <img src="" alt="" id="imgPreviewSrc">
@@ -1280,6 +1305,19 @@ modalOverlay.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && modalOpen) closeModal();
 });
+
+// Email Me — copy address to clipboard + show toast (fallback if no mail client is set up)
+const emailLink = document.querySelector('.footer-links a[href^="mailto:"]');
+const toast = document.getElementById('toast');
+if (emailLink && toast) {
+  emailLink.addEventListener('click', () => {
+    const email = emailLink.getAttribute('href').replace('mailto:', '');
+    navigator.clipboard?.writeText(email);
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
+  });
+}
 
 // Hide image preview when modal is open
 const origPreviewEnter = preview;
