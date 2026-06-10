@@ -629,6 +629,23 @@ footer{
   letter-spacing:0.1em;
   color:var(--muted);
 }
+.modal-gallery-section-header{
+  grid-column:1/-1;
+  display:flex;align-items:center;gap:1rem;
+  padding:1.75rem 0 0.5rem;
+  margin-top:0.25rem;
+  border-top:1px solid var(--border);
+}
+.modal-gallery-section-header.first{border-top:none;padding-top:0;margin-top:0;}
+.modal-gallery-section-title{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--accent);
+  white-space:nowrap;
+}
+.modal-gallery-section-line{flex:1;height:1px;background:var(--border);}
 @media(max-width:768px){
   .modal-gallery{grid-template-columns:1fr;}
 }
@@ -837,11 +854,17 @@ footer{
       </div>
     </div>
 
-    <div class="project-item" data-img="images/boba-main.png"
-       data-label="Solo Project · Brand System"
-       data-type="Branding · Logo Design · Campaign" data-year="2025"
+    <div class="project-item" data-img="images/Boba Tea - thumbnail.jpg"
+       data-label="Solo Project · Brand Identity · 2025"
+       data-type="Branding · Logo Design · Print & Digital Campaign" data-year="2025"
        data-approach="Solo Project"
-       data-desc="End-to-end brand project for BOBA Tea — from logo system and brand guideline to a full print and digital campaign. Deliverables include storefront signage, thank-you cards, Instagram ads, and DOOH digital banners.">
+       data-desc="End-to-end brand identity built for BOBA — a warm, modern bubble tea brand targeting young coffee culture regulars. The project started with a structured Creative Brief defining the core problem. From there, a complete brand system was built: a 3D-effect logo suite, a three-tone color palette (Molten Amber, Roasted Bean, Vanilla Foam), and full brand guidelines. Deliverables span print and digital — from Instagram campaign mockups to physical storefront signage and thank-you cards."
+       data-tools="Adobe Illustrator,Adobe Photoshop,Branding,Logo Design,Print Design,Digital Campaign"
+       data-imgs="images/Boba Tea - Creative Brief 2.png,images/Boba Tea - Creative Brief.png,images/Boba Tea - Brand Guideline cover.png,images/Boba Tea - Logo Variations page.png,images/Boba Tea - Color palette page.png,images/Boba Tea -Mockup Digital File.png,images/Boba Tea - mockup page.png"
+       data-img-labels="Creative Brief,Creative Brief — Detail,Brand Guideline,Logo System,Color Palette,Digital Campaign,Print Deliverables"
+       data-img-sublabels="Problem Definition,Research & Strategy,Brand System,Primary · B&W · Horizontal · Favicon,Molten Amber · Roasted Bean · Vanilla Foam,Instagram Mockup,Storefront Sign · Thank You Card"
+       data-sections="01 — Creative Brief,02 — Brand Guideline,03 — Mockup"
+       data-section-at="0,2,5">
       <div class="project-num">004</div>
       <div class="project-info">
         <h3>BOBA Tea — Brand Identity & Campaign</h3>
@@ -1160,19 +1183,29 @@ function openModal(item) {
     modalCta.style.display = 'none';
   }
 
-  // Gallery — show all imgs with labels below each
+  // Gallery — show all imgs with section headers and labels
+  const sections = (item.getAttribute('data-sections') || '').split(',').map(s => s.trim()).filter(Boolean);
+  const sectionAt = (item.getAttribute('data-section-at') || '').split(',').map(Number);
+
   modalGallery.innerHTML = '';
   if (imgs.length > 1) {
     imgs.forEach((src, i) => {
-      const item = document.createElement('div');
-      item.className = 'modal-gallery-item';
-      item.innerHTML = `
+      const sectionIdx = sectionAt.indexOf(i);
+      if (sectionIdx !== -1 && sections[sectionIdx]) {
+        const header = document.createElement('div');
+        header.className = 'modal-gallery-section-header' + (sectionIdx === 0 ? ' first' : '');
+        header.innerHTML = `<span class="modal-gallery-section-title">${sections[sectionIdx]}</span><span class="modal-gallery-section-line"></span>`;
+        modalGallery.appendChild(header);
+      }
+      const galleryItem = document.createElement('div');
+      galleryItem.className = 'modal-gallery-item';
+      galleryItem.innerHTML = `
         <img src="${src}" alt="${imgLabels[i] || title}">
         <div class="modal-gallery-label">${imgLabels[i] || ''}</div>
-        <div class="modal-gallery-sublabel">${imgSubLabels[i] || (i === 0 ? 'Digital Display' : 'Social Media')}</div>
+        <div class="modal-gallery-sublabel">${imgSubLabels[i] || ''}</div>
       `;
-      item.querySelector('img').addEventListener('click', () => openLightbox(src, imgLabels[i] || title));
-      modalGallery.appendChild(item);
+      galleryItem.querySelector('img').addEventListener('click', () => openLightbox(src, imgLabels[i] || title));
+      modalGallery.appendChild(galleryItem);
     });
   }
 
